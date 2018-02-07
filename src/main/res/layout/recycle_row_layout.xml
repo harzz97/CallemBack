@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/itemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upcoming Reminders"
+        android:fontFamily="@font/lato"
+        android:textSize="16sp"
+        android:layout_margin="5dp"
+        android:textColor="#000"
+        android:visibility="gone"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/user_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:cropToPadding="false"
+            android:src="@drawable/defaultcallpic" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="User 1"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/user_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="987654321"
+                android:text=""
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/pastText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="987654321"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end">
+
+            <ImageView
+                android:id="@+id/deleteSide"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_delete_black_24dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/remindingText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="Reminding at: "
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/snoozeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/row_button_bg"
+            android:gravity="center_vertical"
+            android:text="Snooze"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/callText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/row_button_bg"
+            android:gravity="center_vertical"
+            android:text="Call"
+            android:textAlignment="center" />
+    </LinearLayout>
+</LinearLayout>
+

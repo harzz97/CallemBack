@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/simple_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/user_profile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:cropToPadding="false"
+                android:src="@drawable/defaultcallpic" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User 1"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="5dp" />
+
+
+                <TextView
+                    android:id="@+id/user_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="987654321"
+                    android:text=""
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="58dp" />
+
+                <TextView
+                    android:id="@+id/user_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="1 Feb 2018"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="31dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end">
+
+                <ImageView
+                    android:id="@+id/deleteSide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_delete_black_24dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/expandable_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_edit_black_24dp"
+                android:gravity="center_vertical"
+                android:text="Edit" />
+
+            <TextView
+                android:id="@+id/deleteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_delete_black_24dp"
+                android:gravity="center_vertical"
+                android:text="Delete" />
+
+            <TextView
+                android:id="@+id/callText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_call_black_24dp"
+                android:gravity="center_vertical"
+                android:text="Call" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
