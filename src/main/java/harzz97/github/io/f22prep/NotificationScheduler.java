@@ -29,7 +29,6 @@ class NotificationScheduler {
         intent.putExtra("schedule",schedule);
         pendingIntent = PendingIntent.getBroadcast(c,REQUEST_CODE,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-        assert alarmManager != null;
 
         SharedPreferences preferences = c.getSharedPreferences("AlarmPreferences",0);
         SharedPreferences.Editor editor = preferences.edit();

@@ -51,7 +51,6 @@
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="User 1"
                 android:textStyle="bold" />
 
 
@@ -59,14 +58,13 @@
                 android:id="@+id/user_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="987654321"
                 android:text=""
                 android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/pastText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="987654321"
                 android:textSize="10sp" />
         </LinearLayout>
 

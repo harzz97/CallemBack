@@ -50,23 +50,22 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         if(intent!=null && intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){
             Log.e("Out going call","");
         }else{
-
             // create an instance of DatabaseHandler
             db= new DatabaseHandler(mContext.getApplicationContext());
             bundle = intent.getExtras();
             assert bundle != null;
             //get the outgoing number from the intent
             final String number = bundle.getString("incoming_number");
-            //once the state becomed idle start a handler after 4 milliseconds
+            //once the state becomes idle start a handler after 4 milliseconds
             // giving enough time for system to write call history
             if((bundle.get("state").equals("IDLE"))){
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         /**
-                         @params[0] is call duration
-                         @params[1] is timestamp which represents the time of call
-                         **/
+                         *@params[0] is call duration
+                         *@params[1] is timestamp which represents the time of call
+                         ***/
                         String params[];
                         //read call logs for the outgoing number
                         params = readCallLogs(number);
@@ -74,7 +73,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                         long difference = ((System.currentTimeMillis()/1000)-(Long.parseLong(params[1])/1000));
                         //if call duration is zero and the difference is greater than 5 second but less than a minute
                         //display the prompt
-                        //maximum duration before the call gets cancelled automatically is 60 seconds
+                        //maximum duration before the call gets disconnected automatically is 60 seconds
                         if ((params[0].equals("0")) &&((difference>=5)&&(difference<65))){
                             //display prompt for that number
                             displayPrompt(number);
@@ -91,13 +90,13 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
     /***
      * @param number is the outgoing number
-     *               function return
-     *               duration of call and time of call
+     * the function returns duration of call and time of call
      * */
     private String[] readCallLogs(String number){
 
-        //projection for thr query
-        String[] projection = new String[]{Calls._ID,
+        //projection for the query
+        String[] projection = new String[]{
+                Calls._ID,
                 Calls.NUMBER,
                 Calls.DATE,
                 Calls.DURATION,
@@ -105,9 +104,9 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
         //create a cursor to get the details for the selected contact
 
-        //selection params is used to select numbers that are outgoing and match the passed number
+        //selection params is used to select numbers that are outgoing type and match the passed number
         //sort the result in descending so we get the recent call first
-        //outgoing calls values are 2
+        //outgoing calls are of type 2
 
         @SuppressLint("MissingPermission")
         Cursor cursor = mContext.getContentResolver().query(Calls.CONTENT_URI,
@@ -140,13 +139,12 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
     /***
      * @param number is the outgoing number
-     *               function returns a string array containing display name
+     *               @function returns a string array containing display name
      *               phone number and
      *               uri to profile photo
      * */
 
     private String[] getContactDetails(String number){
-
 
         //project only the name number and profile uri
         String[] projection = new String[]{Phone.DISPLAY_NAME,Phone.PHOTO_URI, Phone.NUMBER};
@@ -178,7 +176,6 @@ public class PhoneStateReceiver extends BroadcastReceiver {
      *
      * the params we pass to add a new entry to database are
      * ContactName,ContactNumber,contactImage path,call Time,reminder duration
-     *
      * call Time and reminder duration are sent as timestamp values
      *
      * **/
@@ -199,9 +196,9 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         layoutParams = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
-                        LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                        LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                        LayoutParams.FLAG_FULLSCREEN |
+                        LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH ,
                 PixelFormat.TRANSLUCENT);
         //set width, height, x and y co-ordinates
         layoutParams.width = LayoutParams.MATCH_PARENT;
@@ -229,9 +226,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         TextView fifteen = popUpView.findViewById(R.id.buttonFifteen);
         TextView thirty = popUpView.findViewById(R.id.buttonThirty);
         TextView custom = popUpView.findViewById(R.id.buttonCustom);
-        CardView prompt = popUpView.findViewById(R.id.remindPrompt);
 
-        Log.e("Contact Name",contactDetails[0]);
         if(contactDetails[0].isEmpty()){
             profilePhoto.setImageResource(R.drawable.defaultcallpic);
             //set the contact name
@@ -246,23 +241,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             profilePhoto.setImageDrawable(drawable);
         }
 
-        //if no contact thumbnail set default
-        /*if((contactDetails[2]!=null)&&(!(Objects.equals(contactDetails[2], "0")))){
-            //Glide.with(mContext).load(contactDetails[2]).apply(RequestOptions.circleCropTransform()).into(profilePhoto);
-            profilePhoto.setImageURI(Uri.parse(contactDetails[2]));
-        }else{
-            //Glide.with(mContext).load(R.drawable.defaultcallpic).apply(RequestOptions.circleCropTransform()).into(profilePhoto);
-            profilePhoto.setImageResource(R.drawable.defaultcallpic);
-        }*/
-
         //add the view to the layout
        linearLayout.addView(popUpView);
 
         //add layout to window
         windowManager.addView(linearLayout,layoutParams);
-
-
-
 
         //set onclick listener for 15 min button
         fifteen.setOnClickListener(new OnClickListener() {
@@ -276,6 +259,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                 //display toast message
                 Toast.makeText(mContext,"Notification set for 15 Min",Toast.LENGTH_LONG).show();
                 //create new entry to the database
+                //if userName is not present just leave it empty
                 if(contactDetails[0].isEmpty()){
                     db.addEntry(new UserDetails("",
                            number,
@@ -283,7 +267,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                             String.valueOf(System.currentTimeMillis()),
                             String.valueOf(dateTime.getMillis())));
                 }else{
-
+                    //add both name and number
                     db.addEntry(new UserDetails(contactName.getText().toString(),
                             contactNumber.getText().toString(),
                             contactDetails[2],
@@ -299,17 +283,25 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         thirty.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //create a new dateTime object and add 30 minutes to it
                 dateTime = new DateTime().plusMinutes(30);
                 //set reminder for thirty minutes
                 NotificationScheduler.setReminder(mContext,AlarmReceiver.class,dateTime.getMillis());
-                //create new entry in the database
-                db.addEntry(new UserDetails(contactName.getText().toString(),
-                        contactNumber.getText().toString(),
-                        contactDetails[2],
-                        String.valueOf(System.currentTimeMillis()),
-                        String.valueOf(dateTime.getMillis())));
+                //if contact name is empty add contact number only
+                if(contactDetails[0].isEmpty()){
+                    db.addEntry(new UserDetails("",
+                            number,
+                            contactDetails[2],
+                            String.valueOf(System.currentTimeMillis()),
+                            String.valueOf(dateTime.getMillis())));
+                }else{
+                    //add both name and number
+                    db.addEntry(new UserDetails(contactName.getText().toString(),
+                            contactNumber.getText().toString(),
+                            contactDetails[2],
+                            String.valueOf(System.currentTimeMillis()),
+                            String.valueOf(dateTime.getMillis())));
+                }
                 //remove layout from window
                 windowManager.removeViewImmediate(linearLayout);
             }
@@ -331,11 +323,20 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                                 //set Reminder
                                 NotificationScheduler.setReminder(mContext, AlarmReceiver.class, dateTime.getMillis());
                                 //add contactName,contactNumber,profilePicture path,Current Time,reminder time
-                                db.addEntry(new UserDetails(contactName.getText().toString(),
-                                        contactNumber.getText().toString(),
-                                        contactDetails[2],
-                                        System.currentTimeMillis()+"",
-                                        String.valueOf(dateTime.getMillis())));
+                                if(contactDetails[0].isEmpty()){
+                                    db.addEntry(new UserDetails("",
+                                            number,
+                                            contactDetails[2],
+                                            String.valueOf(System.currentTimeMillis()),
+                                            String.valueOf(dateTime.getMillis())));
+                                }else{
+                                    //add both name and number
+                                    db.addEntry(new UserDetails(contactName.getText().toString(),
+                                            contactNumber.getText().toString(),
+                                            contactDetails[2],
+                                            String.valueOf(System.currentTimeMillis()),
+                                            String.valueOf(dateTime.getMillis())));
+                                }
                                 Toast.makeText(mContext,"Notification Set",Toast.LENGTH_LONG).show();
 
                             }

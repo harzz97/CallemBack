@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -38,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.READ_CONTACTS).withListener(new MultiplePermissionsListener(){
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-
+                        if(report.areAllPermissionsGranted())
+                            Log.e("Main Activity","All Permission Granted");
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-
+                        Toast.makeText(getApplicationContext(),"Permissions are needed to run this app",Toast.LENGTH_LONG).show();
                     }
                 }).check();
 
@@ -62,9 +65,5 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
 
         }
-
-
     }
-
-
 }

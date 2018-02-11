@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Call\'em Back</string>
+    <string name="pastReminder">Past Reminders</string>
+    <string name="upComingReminder">Upcoming Reminders</string>
 </resources>

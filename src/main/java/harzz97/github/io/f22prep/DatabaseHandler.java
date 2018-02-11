@@ -18,11 +18,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     private static final int DB_VERSION = 1;
-
     private static  final  String DB_NAME ="LogDetails";
-
     private static final  String TABLE_NAME = "Logs";
-
     private static final String _id = "id";
     private static final String ContactName = "ContactName";
     private static final String ContactNumber = "ContactNumber";
@@ -36,15 +33,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(c, DB_NAME, null, DB_VERSION);
     }
 
-
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_TABLE = "CREATE TABLE "+ TABLE_NAME + " ( "+
-                _id +" INTEGER PRIMARY KEY, "+ ContactName + " TEXT, "+
-                ContactNumber+" TEXT, "+ profilePath +" TEXT, "+
-                callTime+" TEXT, "+ duration+" INTEGER, "+
-                snoozed+" TEXT, "+ enabled+" TEXT )";
+                _id +" INTEGER PRIMARY KEY, "
+                + ContactName + " TEXT, "
+                + ContactNumber+" TEXT, "
+                + profilePath +" TEXT, "
+                + callTime+" TEXT, "
+                + duration+" INTEGER, "
+                + snoozed+" TEXT, "
+                + enabled+" TEXT )";
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
 
@@ -67,7 +66,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //add new Entry
-    public void addEntry(UserDetails details){
+    void addEntry(UserDetails details){
         SQLiteDatabase db = this.getWritableDatabase();
 
         //add contactName,contactNumber,profilePicture path,Current Time,reminder time
@@ -92,7 +91,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT id,ContactName,ContactNumber,ProfilePath,CallTime,Duration,Snoozed,Enabled FROM "+ TABLE_NAME+" ORDER BY id DESC";
+        String query = "SELECT id," +
+                "ContactName," +
+                "ContactNumber," +
+                "ProfilePath," +
+                "CallTime," +
+                "Duration," +
+                "Snoozed," +
+                "Enabled FROM "+ TABLE_NAME+" ORDER BY id DESC";
 
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();

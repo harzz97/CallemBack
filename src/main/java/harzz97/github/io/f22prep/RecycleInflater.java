@@ -27,8 +27,6 @@ import org.joda.time.DateTime;
 import java.util.Calendar;
 import java.util.List;
 
-;
-
 
 public class RecycleInflater extends RecyclerView.Adapter<RecycleInflater.ViewHolder>  {
 
@@ -66,19 +64,19 @@ public class RecycleInflater extends RecyclerView.Adapter<RecycleInflater.ViewHo
         if(Long.parseLong(userDetails.getDuration())<= System.currentTimeMillis()){
             if(!hasPastActivityStarted){
                 holder.itemTitle.setVisibility(View.VISIBLE);
-                holder.itemTitle.setText("Past Reminders");
+                holder.itemTitle.setText(R.string.pastReminder);
                 hasPastActivityStarted=true;
             }else{
                 holder.itemTitle.setVisibility(View.GONE);
             }
             holder.expand.setVisibility(View.GONE);
             holder.deleteSide.setVisibility(View.GONE);
-            holder.pastText.setText( new DateTime().withMillis(Long.parseLong(userDetails.getDuration())).toString("HH:mm"));
+            holder.pastText.setText( new DateTime().withMillis(Long.parseLong(userDetails.getDuration())).toString("d MMM YY HH:mm"));
             holder.userName.setTextColor(Color.rgb(119,136,153));
             holder.mobileNumber.setTextColor(Color.rgb(119,136,153));
         }else{
             if(hasFutureActivityStarted) {
-                holder.itemTitle.setText("Upcoming Reminders");
+                holder.itemTitle.setText(R.string.upComingReminder);
                 hasFutureActivityStarted=false;
                 holder.itemTitle.setVisibility(View.VISIBLE);
             }else{
@@ -93,6 +91,8 @@ public class RecycleInflater extends RecyclerView.Adapter<RecycleInflater.ViewHo
 
         if(userDetails.getContactName().isEmpty()){
             holder.profilePicture.setImageResource(R.drawable.defaultcallpic);
+            holder.mobileNumber.setTypeface(holder.mobileNumber.getTypeface(),Typeface.BOLD);
+            holder.mobileNumber.setTextSize(16.0f);
             holder.userName.setVisibility(View.GONE);
         }else{
             TextDrawable drawable = TextDrawable.builder()
